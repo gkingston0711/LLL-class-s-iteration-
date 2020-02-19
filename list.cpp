@@ -1,6 +1,7 @@
 #include<iostream>
 #include<cstring>
 #include"list.h"
+
 using namespace std;
 
 node::node()
@@ -62,11 +63,6 @@ void node::set_next(node * connect)
 	next=connect;
 }
 
-node * node:: get_next()
-{
-	return next;
-}
-
 
 /**********LIST IMPLEMENTATION IS BELOW**************/
 
@@ -111,10 +107,91 @@ void list::display()
 
 		while(temp!=NULL)
 		{
+			if(temp->go_next()==NULL)
+			{
+
+				cout<<temp->get_node()<<endl;
+				return;
+			}
 			cout<<temp->get_node()<<"-> ";
-			temp->set_next(temp->go_next());//*******ERROR HERE SOME HOW *****
+			temp=temp->go_next();
+			//	temp->set_next(temp->go_next());//*******ERROR HERE SOME HOW *****
 		}
 	}
 	return;
+}
+
+int list::count_list()
+{
+	if(!head)
+	{
+		return 0;
+	}
+	else
+	{
+		node *temp=head;
+		int count=0;
+
+		while(temp!=NULL)
+		{
+			++count;
+			temp=temp->go_next();
+		}
+		return count;
+
+
+	}
+}
+
+void list::remove_name(char *NAME)
+{
+	if(!head)
+	{
+		cout<<"no list"<<endl;
+		return;
+	}
+
+	node *temp=head;
+	node *current=head;
+	while(current!=NULL)
+	{
+		if(strcmp(current->get_node(),NAME)!=0)
+		{
+			temp=current;
+			current=current->go_next();
+		}
+		if(strcmp(current->get_node(),NAME)==0)
+		{
+			temp->go_next()=current->go_next();
+			delete current;
+			return;
+		}
+	}
+}
+
+void list::add_name_end(char *NAME)
+{
+	node *new_node=new node;
+	new_node->set_node(NAME);//calling set node method from node class, node is private so required
+	new_node->set_next(/*head->go_next()*/NULL);
+
+	if(!head)
+	{
+		head=new_node;
+		head->set_next(NULL);
+		return;
+	}
+	else
+	{
+		node *temp=head;
+
+		while(temp->go_next()!=NULL)
+		{
+			temp=temp->go_next();
+		}
+
+		temp->set_next(new_node);
+		return;
+	}
 }
 

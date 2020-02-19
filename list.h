@@ -11,7 +11,6 @@ class node
 		char* get_node();
 		void display();
 		void set_next(node *connect);
-		node* get_next();	
 
 	private:
 		char *name;
@@ -24,7 +23,10 @@ class list
 		list();
 		~list();
 		void add_name_front(char *name);
+		int count_list();
 		void display();
+		void remove_name(char *NAME);
+		void add_name_end(char *NAME);
 
 
 	private:
